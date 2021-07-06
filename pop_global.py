@@ -83,7 +83,7 @@ if __name__=="__main__":
   ymax=p.elements.lat.max().value_in(units.deg)
 
   tnow=p.model_time
-  dt=50 | units.day
+  dt=365 | units.day
   tend=tnow+(365*100 | units.day)
   t=tnow.value_in(units.day)
   t=int(t/(365))
