@@ -14,10 +14,9 @@ def depth_levels(N, stretch_factor=1.8): #1.8
     
 #~ print h
 
-def read_global_mask(Nx,Ny,Nz):
-    #filename="mask_global_{0}x{1}x{2}".format(Nx, Ny, Nz)
-    #filename="mask_test".format(Nx, Ny, Nz)
-    filename="mask_global_96x118x12".format(Nx, Ny, Nz)
+def read_global_mask(Nx,Ny,Nz, filename=None):
+    if filename is None:
+        filename="mask_global_{0}x{1}x{2}".format(Nx, Ny, Nz)
     
     mask=numpy.zeros((Nx+1,Ny+2,Nz+2), dtype='int')
     
@@ -32,13 +31,20 @@ def read_global_mask(Nx,Ny,Nz):
 
 def depth_array(Nx,Ny,Nz):
     mask=read_global_mask(Nx,Ny,Nz)
-                
+                    
     depth=mask[:,:,:].argmin(axis=2)
-    
+        
     a=depth>0
-    depth[a]=Nz-depth[a]
+
+    depth[a]=Nz-(depth[a])+1
+    #~ print(Nz,depth[a].max(), depth[a].min())
+
     
     depth=depth[::,::-1]
+
+    #~ print(Nz,depth.max(), depth.min())
+    #~ exit(0)
+
     
     return depth
 
